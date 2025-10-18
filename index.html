@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <meta name="keywords" content="mantenimiento de computadores, redes, sistematización, Innovafix, soporte técnico, tecnología, Cali">
+<meta property="og:image" content="https://i.imgur.com/Lh8ns52.jpeg">
+<meta property="og:title" content="Innovafix - Soluciones Tecnológicas en Cali">
+<meta property="og:description" content="Mantenimiento de cómputo, redes y sistematización con innovación y calidad.">
+
+
+  <!-- Favicon -->
+  <link rel="icon" href="https://i.imgur.com/Lh8ns52.jpeg" type="image/jpeg">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Exo+2:wght@400;600&display=swap" rel="stylesheet">
+  
+  
+  
+  <!-- 🔥 Aquí va el código de Google Analytics cuando tu página esté lista -->
+  <!-- Ejemplo:
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  -->
+
+
+
+  <style>
+    /* ========== RESET BÁSICO ========== */
+    :root{
+      --red-1:#ff1a1a;
+      --red-2:#e60000;
+      --bg-dark:#000;
+      --panel:#1a1a1a;
+      --muted:#bbb;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Exo 2', sans-serif;
+      /* DIAGONAL GRADIENT: negro -> rojo oscuro (sin imágenes) */
+      background: linear-gradient(135deg, #000000 0%, #150000 55%, #b30000 100%);
+      color:#fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      scroll-behavior:smooth;
+    }
+
+
+    /* ========== LOADER ========== */
+    #loader{
+      position:fixed;inset:0;
+      display:flex;align-items:center;justify-content:center;
+      background:var(--bg-dark);z-index:9999;opacity:1;
+      transition:opacity .8s ease;
+    }
+    #loader.hidden{opacity:0;pointer-events:none}
+    #loader img{width:110px;opacity:0;animation:loaderPulse 2s ease-in-out infinite, fadeInLogo 0.9s ease forwards;}
+    @keyframes fadeInLogo{0%{opacity:0;transform:scale(.98)}100%{opacity:1;transform:scale(1)}}
+    @keyframes loaderPulse{
+      0%,100%{filter:drop-shadow(0 0 6px #b30000) drop-shadow(0 0 12px #e60000)}
+      50%{filter:drop-shadow(0 0 15px #ff3333) drop-shadow(0 0 30px #ff1a1a)}
+    }
+
+    /* ========== HEADER ========== */
+    header{
+      position:relative;
+      /* mantengo tu header visual, solo quité fondo repetido fuera del header */
+      background: url('https://i.imgur.com/Ul4dQBS.jpeg') no-repeat center/cover;
+      padding:64px 20px;
+      text-align:center;
+      overflow:visible;
+    }
+    header::before{
+      content:"";position:absolute;inset:0;background:rgba(0,0,0,0.4);z-index:1;
+    }
+    header h1, header p{position:relative;z-index:2;margin:0}
+    /* Neón / encendido para título */
+    h1{
+      font-family:'Orbitron', sans-serif;
+      font-size:3.0rem;
+      color:var(--red-1);
+      -webkit-text-stroke: .6px black;
+      text-shadow: 0 0 8px rgba(255,26,26,0.6), 0 0 20px rgba(179,0,0,0.6);
+      opacity:0;
+      transform:scale(.98);
+      animation: titlePower 1s ease forwards 0.3s;
+    }
+    @keyframes titlePower{
+      0%{opacity:0;filter:brightness(.1) drop-shadow(0 0 0 rgba(255,0,0,0)); transform:translateY(10px) scale(.98)}
+      40%{opacity:1;filter:brightness(1.1) drop-shadow(0 0 6px rgba(255,0,0,.25)); transform:translateY(0) scale(1.02)}
+      100%{opacity:1;filter:brightness(1.2) drop-shadow(0 0 18px rgba(255,0,0,.45)); transform:translateY(0) scale(1)}
+    }
+    header p{
+      font-size:1.05rem;margin-top:12px;font-weight:600;color:#fff;text-shadow:0 0 6px rgba(0,0,0,.9)
+    }
+
+    /* pulso sutil (usa para subheaders si quieres) */
+    .titulo-pulso{animation:pulsoSuave 2.5s ease-in-out infinite;color:var(--red-2)}
+    @keyframes pulsoSuave{
+      0%,100%{text-shadow:0 0 8px rgba(230,0,0,.35)}50%{text-shadow:0 0 20px rgba(230,0,0,.7)}
+    }
+
+    /* ========== NAV ========== */
+    nav{
+      background:var(--bg-dark);
+      padding:12px 10px;
+      text-align:center;position:sticky;top:0;z-index:50;
+      box-shadow:0 2px 8px rgba(0,0,0,.45);
+    }
+    nav .nav-links{display:inline-flex;gap:18px;align-items:center;flex-wrap:wrap}
+    nav a{color:#f2f2f2;text-decoration:none;font-weight:600;padding:6px 8px;transition:color .35s, transform .25s}
+    nav a:hover{color:var(--red-2);text-shadow:0 0 8px rgba(230,0,0,.35);transform:translateY(-2px)}
+
+    /* ========== MAIN SECTIONS ========== */
+    section{padding:70px 18px;max-width:1100px;margin:0 auto}
+    h2{font-family:'Orbitron',sans-serif;font-size:2rem;color:var(--red-2);margin-bottom:18px;text-align:center}
+    p{font-size:1.05rem;line-height:1.7;color:#eee}
+    form {
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  max-width:500px;
+  margin:0 auto;
+}
+
+input, textarea {
+  padding:10px;
+  border-radius:6px;
+  border:1px solid var(--red-2);
+  background:var(--panel);
+  color:#fff;
+}
+
+button {
+  padding:12px;
+  background:var(--red-1);
+  border:none;
+  color:#fff;
+  font-weight:700;
+  border-radius:6px;
+  cursor:pointer;
+  transition:all .25s;
+}
+
+button:hover {
+  background:var(--red-2);
+  transform:scale(1.03);
+}
+
+
+    /* ACCORDION */
+    .accordion{
+      background:var(--bg-dark);color:var(--red-2);cursor:pointer;padding:14px;margin:10px 0;width:100%;
+      border:1px solid var(--red-2);text-align:left;font-size:1.05rem;border-radius:8px;font-weight:700;transition:all .25s
+    }
+    .accordion:hover{background:#111;color:#ff3333}
+    .panel {
+  padding: 0 18px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  background: rgba(0,0,0,.7);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transform: translateY(10px); /* deslizamiento suave */
+  transition: 
+    max-height 0.42s ease,
+    padding 0.35s ease,
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.accordion.active + .panel {
+  max-height: 400px; /* puedes subirlo si el contenido es más largo */
+  padding: 18px;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+    /* CARDS */
+    .extra{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin-top:24px}
+    .card{background:var(--panel);padding:20px;border-radius:12px;text-align:center;box-shadow:0 0 12px rgba(0,0,0,.45);transition:transform .28s,box-shadow .28s}
+    .card:hover{transform:translateY(-6px);box-shadow:0 0 28px rgba(230,0,0,.18)}
+    .card h3{font-family:'Orbitron',sans-serif;color:var(--red-2);margin-bottom:10px}
+
+    /* FOOTER */
+    footer{background:var(--bg-dark);color:var(--muted);text-align:center;padding:22px;margin-top:40px}
+
+    
+
+    /* SOCIAL ICONS - UNIFICADOS */
+
+  .social-icon {
+  color: var(--red-2);
+  font-size: 2rem;
+  transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 36px; /* controla el espaciado entre íconos */
+  margin-top: 16px;
+}
+
+
+.social-icon:hover i {
+  color: #ff0055;
+  transform: rotate(4deg) scale(1.25);
+  text-shadow: 0 0 10px #ff0055, 0 0 20px #ff0055, 0 0 40px #ff0055;
+}
+
+
+    /* ========== SCROLL ANIMATIONS (oculto por defecto) ========== */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width:800px){
+      h1{font-size:2.4rem}
+      header{padding:48px 16px}
+      section{padding:50px 14px}
+      nav .nav-links{gap:10px}
+      nav a{margin:0 8px;font-size:.98rem}
+      .whatsapp-btn{right:14px;bottom:12px;padding:10px}
+    }
+    @media (max-width:520px){
+      h1{font-size:2rem}
+      header p{font-size:1rem}
+      .extra{grid-template-columns:1fr}
+      nav .nav-links{display:block}
+      nav a{display:inline-block;margin:6px 8px}
+      header{padding:40px 12px}
+    }
+
+    /* Prefer reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{transition:none!important;animation:none!important}
+      .accordion i {
+  color: var(--red-2);
+  font-size: 1rem;
+  margin-left: 6px;
+  transition: transform 0.3s ease;
+}
+.accordion.active i {
+  transform: rotate(180deg);
+}
+
+    }
+  </style>
+</head>
+<body>
+<audio id="soundPunch" src="https://www.dropbox.com/scl/fi/mzy636pb8jtju4kchl1lf/Documento-de-Erreip.mp3?rlkey=1g1hwr5pomxd0nbp8g3p0wy3i&st=vjpc55dn&dl=1" preload="auto"></audio>
+
+  <!-- Loader -->
+  <div id="loader"><img src="https://i.imgur.com/Lh8ns52.jpeg" alt="Logo Innovafix"></div>
+
+<audio id="loaderSound" preload="auto">
+  <source src="https://www.dropbox.com/scl/fi/l7oqv7svdt817f8zvfglg/Arc-ngel-Anuel-AA-Rojo-Instrumental.mp3?rlkey=l3thd86c7di31yqcfupnljivf&st=4o6ob70u&dl=1" type="audio/mpeg">
+</audio>
+
+
+  <!-- Header -->
+  <header>
+    <h1>Innovafix</h1>
+    <p>Tu aliado en mantenimiento, sistematización y redes</p>
+  </header>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-links">
+      <a href="#about">Inicio</a>
+      <a href="#sistematizacion">Sistematización</a>
+      <a href="#mantenimiento">Mantenimiento</a>
+      <a href="#redes">Redes</a>
+      <a href="#nosotros">Nosotros</a>
+    </div>
+  </nav>
+
+  <!-- About -->
+  <main>
+    <section id="about" class="reveal">
+      <h2 class="titulo-pulso">¿Qué es Innovafix?</h2>
+      <p>
+        Innovafix es una empresa de mantenimiento de cómputo y servicios tecnológicos que se destaca por su compromiso con la eficiencia, la innovación y la confiabilidad.
+        Estamos organizados en tres departamentos especializados: <strong>Sistematización</strong>, <strong>Mantenimiento</strong> y <strong>Redes</strong>, cada uno diseñado para responder a las necesidades de nuestros clientes con soluciones prácticas y efectivas.
+      </p>
+    </section>
+
+
+
+
+
+
+    <!-- Acordeones -->
+    <section id="sistematizacion" class="reveal">
+      <button class="accordion">Sistematización</button>
+      <div class="panel">
+        <p>Es el corazón tecnológico de la empresa. Nuestro propósito es garantizar que todos los procesos digitales funcionen de manera eficiente, segura y sin interrupciones, impulsando el desempeño de cada área y facilitando el trabajo diario de todo el equipo.</p>
+
+<p>Nos encargamos de mantener y optimizar los equipos de cómputo, asegurando su correcto funcionamiento, actualización y rendimiento. También gestionamos la instalación y actualización de software, trabajamos en herramientas ofimáticas, y participamos activamente en la creación de contenido digital que potencia la comunicación y la imagen de la empresa.</p>
+
+<p>Además, brindamos soporte técnico integral y acompañamos cada iniciativa que involucre sistemas o tecnología dentro de Innovafix. Nuestra meta es que la tecnología no sea un obstáculo, sino un aliado estratégico que facilite el trabajo, mejore la productividad y contribuya al crecimiento constante de la organización.</p>
+
+<p>Con compromiso, innovación y atención al detalle, seguimos fortaleciendo la infraestructura tecnológica de Innovafix, conectando personas, procesos e ideas para lograr resultados excepcionales.</p>
+      </div>
+    </section>
+
+    <section id="mantenimiento" class="reveal">
+      <button class="accordion">Mantenimiento</button>
+      <div class="panel">
+        <p>Tenemos la misión de garantizar que todas las instalaciones, equipos y herramientas funcionen de manera óptima, segura y continua. Somos el respaldo técnico que mantiene la operación en marcha, asegurando que cada área de la empresa pueda trabajar sin interrupciones y con total confianza.</p>
+
+<p>Nos especializamos en el mantenimiento preventivo y correctivo de equipos, maquinaria y sistemas, abordando desde las revisiones rutinarias hasta la solución inmediata de fallas o imprevistos. Nuestro enfoque está en anticiparnos a los problemas, extendiendo la vida útil de los equipos y evitando tiempos de inactividad que afecten la productividad.</p>
+
+<p>Cada intervención se realiza con precisión, compromiso y atención al detalle, utilizando herramientas y métodos actualizados para garantizar resultados eficientes y duraderos. Además, trabajamos de manera coordinada con los demás departamentos para ofrecer soluciones integrales, asegurando que la infraestructura de Innovafix se mantenga en las mejores condiciones posibles.</p>
+
+<p>El mantenimiento no solo es reparar: es cuidar, optimizar y mejorar constantemente. Por eso, nuestro equipo se esfuerza día a día en crear entornos de trabajo funcionales, seguros y listos para el crecimiento continuo de la empresa.</p>
+      </div>
+    </section>
+
+    <section id="redes" class="reveal">
+      <button class="accordion">Redes</button>
+      <div class="panel">
+        <p>Asumimos la misión de diseñar, instalar y mantener infraestructuras de cableado y conectividad que impulsen la eficiencia, la velocidad y la estabilidad en el flujo de la información. Nuestro objetivo es que cada conexión cuente, y que cada sistema funcione de manera fluida, segura y sin interrupciones.</P>
+
+
+<P>Contamos con un equipo especializado en soluciones de red a medida, capaz de adaptarse a las necesidades específicas de cada cliente, sin importar el tamaño o la complejidad del proyecto. Desde la planificación inicial hasta la implementación final, cuidamos cada detalle técnico para asegurar una conectividad sólida, ordenada y preparada para el futuro. </P>
+
+
+<P>Nos destacamos por ofrecer soluciones prácticas, modernas y eficientes, que optimizan la comunicación entre dispositivos, equipos y personas. Nos enfocamos en que la tecnología trabaje a favor de la productividad, reduciendo tiempos muertos y maximizando el rendimiento de cada sistema.</P>
+
+
+<P>Cada instalación refleja nuestro compromiso con la calidad, la innovación y la atención al detalle. Creemos que una red bien diseñada no solo conecta equipos, sino que conecta ideas, oportunidades y crecimiento. Por eso, en cada proyecto trabajamos con dedicación, precisión y pasión por lo que hacemos, garantizando resultados confiables y duraderos.</p>
+      </div>
+    </section>
+
+    <!-- ...todo tu código igual arriba... -->
+
+    <!-- Nosotros -->
+    <section id="nosotros" class="reveal">
+      <h2>Nuestros Valores</h2>
+      <div class="extra">
+        <div class="card">
+          <h3>Compromiso</h3>
+          <p>Atendemos a cada cliente con soluciones personalizadas y soporte dedicado.</p>
+        </div>
+        <div class="card">
+          <h3>Calidad</h3>
+          <p>Trabajamos con altos estándares y mejores prácticas tecnológicas.</p>
+        </div>
+        <div class="card">
+          <h3>Innovación</h3>
+          <p>Integramos nuevas herramientas y métodos para estar siempre un paso adelante.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 🌐 SECCIÓN DE CONTACTO FINAL (AHORA ANTES DEL FOOTER) -->
+    <section id="contacto" class="reveal" style="
+      background: radial-gradient(circle at top, rgba(255,0,0,0.15), rgba(0,0,0,1) 70%);
+      padding: 80px 20px;
+      text-align: center;
+      color: #fff;
+      margin-top: 60px;
+      border-top: 1px solid rgba(255,0,0,0.2);
+    ">
+      <h2 style="
+        font-size: 2em;
+        color: #ff0000;
+        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+        margin-bottom: 40px;
+      ">
+        Solicita Nuestros Servicios
+      </h2>
+      
+      <div style="display: flex; justify-content: center;">
+        <iframe 
+          src="https://forms.gle/YDrtfXvkf5p11nUSA"
+          width="100%"
+          height="800"
+          style="
+            max-width: 650px;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 0 25px rgba(255,0,0,0.3);
+            background: #111;
+          ">
+        </iframe>
+      </div>
+    </section>
+
+<footer>
+  <p style="margin-bottom: 12px;">
+    📍 Cl. 72b #11 - 16, Siete de Agosto, Cali, Valle del Cauca
+  </p>
+
+  <div class="footer-social">
+    <a href="https://instagram.com/innovafixcrew" target="_blank" aria-label="Instagram" class="social-icon">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a href="mailto:innovafixcrew@gmail.com" target="_blank" aria-label="Correo" class="social-icon">
+      <i class="fas fa-envelope"></i>
+    </a>
+    <a href="https://wa.me/573128232717" target="_blank" aria-label="WhatsApp" class="social-icon">
+      <i class="fab fa-whatsapp"></i>
+    </a>
+  </div>
+
+  <p style="margin-top: 14px;">© 2025 Innovafix - Todos los derechos reservados</p>
+</footer>
+
+<!-- ...scripts igual abajo... -->
+
+
+
+
+  
+  <!-- Scripts: acordeón + loader + reveal (IntersectionObserver) + detector dispositivo -->
+  <!-- Scripts -->
+<script>
+
+
+// === ACORDEONES con flecha animada y guardado de estado ===
+const acc = document.querySelectorAll(".accordion");
+const sound = document.getElementById("soundPunch");
+if (sound) sound.volume = 0.18;
+
+// Insertar flecha ▼ en cada botón si no existe
+acc.forEach(btn => {
+  if (!btn.querySelector("i")) {
+    const icon = document.createElement("i");
+    icon.className = "fa-solid fa-chevron-down";
+    icon.style.float = "right";
+    icon.style.transition = "transform 0.3s ease";
+    btn.appendChild(icon);
+  }
+});
+
+// Cargar estado guardado
+const savedState = JSON.parse(localStorage.getItem("accordionState")) || {};
+
+acc.forEach((btn, index) => {
+  const panel = btn.nextElementSibling;
+  const icon = btn.querySelector("i");
+
+  // Restaurar estado guardado
+  if (savedState[index]) {
+    btn.classList.add("active");
+    panel.style.maxHeight = panel.scrollHeight + "px";
+    icon.style.transform = "rotate(180deg)";
+  }
+
+  btn.addEventListener("click", function () {
+    const isActive = this.classList.contains("active");
+
+    // Sonido si se abre
+    if (!isActive && sound) {
+      sound.currentTime = 0;
+      sound.play().catch(() => {});
+    }
+
+    this.classList.toggle("active");
+    const panel = this.nextElementSibling;
+    const icon = this.querySelector("i");
+
+    if (this.classList.contains("active")) {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+      icon.style.transform = "rotate(180deg)";
+      savedState[index] = true;
+    } else {
+      panel.style.maxHeight = null;
+      icon.style.transform = "rotate(0deg)";
+      savedState[index] = false;
+    }
+
+    // Guardar estado
+    localStorage.setItem("accordionState", JSON.stringify(savedState));
+  });
+});
+
+// === LOADER ===
+window.addEventListener("load", () => {
+  const sound = document.getElementById("loaderSound");
+  if (sound) {
+    sound.volume = 1; // volumen moderado
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+  }
+
+  const loader = document.getElementById("loader");
+  setTimeout(() => {
+    loader.style.opacity = "0";
+
+    // efecto de desvanecimiento del sonido
+    if (sound) {
+      const fadeOut = setInterval(() => {
+        if (sound.volume > 0.05) {
+          sound.volume -= 0.05;
+        } else {
+          sound.pause();
+          clearInterval(fadeOut);
+        }
+      }, 100);
+    }
+
+    setTimeout(() => {
+      loader.style.display = "none";
+    }, 500);
+  }, 3000);
+});
+
+// === REVEAL ON SCROLL (animaciones suaves) ===
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries, obs) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      obs.unobserve(entry.target);
+    }
+  });
+}, {threshold:0.14});
+revealEls.forEach(el => observer.observe(el));
+
+// === DETECTOR DE DISPOSITIVO ===
+function detectDevice(){
+  const w = window.innerWidth;
+  const isMobile = w <= 768;
+  console.log('📱 Device detection =>', isMobile ? 'Móvil' : 'Escritorio', `(width=${w}px)`);
+  return isMobile;
+}
+window.addEventListener('load', detectDevice);
+window.addEventListener('resize', () => {
+  clearTimeout(window.__detectDeviceTimeout);
+  window.__detectDeviceTimeout = setTimeout(detectDevice, 180);
+});
+</script>
+
+</body>
+</html>
